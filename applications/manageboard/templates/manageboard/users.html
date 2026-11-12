@@ -1,0 +1,36 @@
+{% extends 'applications/base.html' %}
+{% block content %}
+<div class="card card-wide">
+    <div class="page-header">
+        <h2>Користувачі</h2>
+        <a href="{% url 'manage_dashboard' %}" class="btn-secondary" style="width:auto;margin-top:0">Назад</a>
+    </div>
+    <table class="table">
+        <thead><tr><th>Логін</th><th>Email</th><th>Роль</th><th></th></tr></thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td>{{ u.username }}</td>
+                <td>{{ u.email }}</td>
+                <td>
+                    {% if u.id == user.id %}
+                        <span class="role-badge">{{ u.get_role_display }}</span> (ви)
+                    {% else %}
+                    <form method="post" action="{% url 'manage_user_role' u.id %}" style="display:flex;gap:0.5rem">
+                        {% csrf_token %}
+                        <select name="role" style="padding:0.4rem;border:1px solid var(--border-color);border-radius:8px">
+                            {% for value, label in roles %}
+                            <option value="{{ value }}" {% if value == u.role %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn-primary" style="width:auto;margin-top:0;padding:0.4rem 0.9rem">Зберегти</button>
+                    </form>
+                    {% endif %}
+                </td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

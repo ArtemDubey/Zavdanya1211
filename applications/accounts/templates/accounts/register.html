@@ -1,0 +1,11 @@
+{% extends 'applications/base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Реєстрація</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary">Зареєструватися</button>
+    </form>
+</div>
+{% endblock %}

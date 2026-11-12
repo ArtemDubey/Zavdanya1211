@@ -1,0 +1,44 @@
+{% extends 'applications/base.html' %}
+{% block content %}
+<div class="card card-wide">
+    <div class="page-header">
+        <h2>Панель менеджера</h2>
+        <div>
+            <a href="{% url 'manage_users' %}" class="btn-primary">Користувачі</a>
+            <a href="{% url 'manage_categories' %}" class="btn-primary">Категорії</a>
+        </div>
+    </div>
+
+    <h3>Заявки за статусами</h3>
+    <table class="table">
+        <thead><tr><th>Статус</th><th>Кількість</th></tr></thead>
+        <tbody>
+            {% for s in status_stats %}
+            <tr>
+                <td><span class="badge badge-{{ s.value }}">{{ s.label }}</span></td>
+                <td>{{ s.count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p style="margin-top:1rem">Без виконавця (відкриті): <strong>{{ unassigned_count }}</strong></p>
+
+    <h3 style="margin-top:2rem">Заявки по агентах</h3>
+    {% if agent_stats %}
+    <table class="table">
+        <thead><tr><th>Агент</th><th>Усього</th><th>Вирішено</th></tr></thead>
+        <tbody>
+            {% for agent in agent_stats %}
+            <tr>
+                <td>{{ agent.username }}</td>
+                <td>{{ agent.total }}</td>
+                <td>{{ agent.resolved }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="empty">Агентів поки немає</p>
+    {% endif %}
+</div>
+{% endblock %}

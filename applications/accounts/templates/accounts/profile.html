@@ -1,0 +1,25 @@
+{% extends 'applications/base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Профіль</h2>
+    <div class="profile-info">
+        <div class="profile-row">
+            <span class="profile-label">Логін:</span>
+            <span class="profile-value">{{ user.username }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Ім'я:</span>
+            <span class="profile-value">{{ user.first_name }} {{ user.last_name }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Email:</span>
+            <span class="profile-value">{{ user.email }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Роль:</span>
+            <span class="role-badge">{{ user.get_role_display }}</span>
+        </div>
+    </div>
+    <a href="{% url 'profile_edit' %}" class="btn-primary">Редагувати</a>
+</div>
+{% endblock %}

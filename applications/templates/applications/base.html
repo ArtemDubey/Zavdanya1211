@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Підтримка</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        nav {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        }
+
+        .nav-brand {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            padding: 0.45rem 0.9rem;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .nav-links a:hover {
+            background-color: #f3f4f6;
+            color: var(--primary);
+        }
+
+        .btn-logout {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--danger);
+            padding: 0.45rem 0.9rem;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background-color: var(--danger);
+            border-color: var(--danger);
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2.5rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .card h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        /* Стилізація стандартного {{ form.as_p }} */
+        form p {
+            margin-bottom: 1.1rem;
+        }
+
+        form p label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        form p input[type="text"],
+        form p input[type="email"],
+        form p input[type="password"] {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        form p input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .helptext {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+
+        ul.errorlist {
+            list-style: none;
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            width: 100%;
+            background-color: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            width: 100%;
+            background-color: #f3f4f6;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 0.65rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            margin-top: 0.75rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e7eb;
+        }
+
+        /* Стилі для блоку профілю */
+        .profile-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .profile-value {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .role-badge {
+            background-color: #eef2ff;
+            color: var(--primary);
+            padding: 0.2rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .card-wide { max-width: 100%; }
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.page-header h2 { margin: 0; text-align: left; }
+.page-header .btn-primary { width: auto; margin-top: 0; }
+
+table.table { width: 100%; border-collapse: collapse; }
+
+table.table th, table.table td {
+    text-align: left;
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.95rem;
+}
+
+table.table th { color: var(--text-muted); font-weight: 500; }
+table.table a { color: var(--primary); text-decoration: none; font-weight: 500; }
+table.table a:hover { text-decoration: underline; }
+
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: #f3f4f6;
+    color: var(--text-main);
+}
+
+.badge-new { background: #dbeafe; color: #1d4ed8; }
+.badge-in_progress { background: #fef3c7; color: #b45309; }
+.badge-waiting { background: #ede9fe; color: #6d28d9; }
+.badge-resolved { background: #dcfce7; color: #15803d; }
+.badge-closed { background: #e5e7eb; color: #4b5563; }
+.badge-rejected { background: #fee2e2; color: #b91c1c; }
+
+.badge-low { background: #f3f4f6; color: #4b5563; }
+.badge-medium { background: #dbeafe; color: #1d4ed8; }
+.badge-high { background: #fed7aa; color: #c2410c; }
+.badge-critical { background: #fee2e2; color: #b91c1c; }
+
+.description-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    white-space: pre-wrap;
+}
+
+.empty { text-align: center; color: var(--text-muted); padding: 2rem 0; }
+
+form p textarea, form p select {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+.message { max-width: 100%; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.95rem; }
+.message-success { background: #dcfce7; color: #15803d; }
+.message-error { background: #fee2e2; color: #b91c1c; }
+
+.actions { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
+.actions h3 { margin-bottom: 0.75rem; }
+.actions form { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; align-items: center; }
+.actions select { padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 8px; }
+.actions .btn-primary { width: auto; margin-top: 0; padding: 0.5rem 1rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <span class="nav-brand">Support Desk</span>
+        <div class="nav-links">
+            {% if user.role == 'manager' %}
+    <a href="{% url 'manage_dashboard' %}">Керування</a>
+{% endif %}
+            {% if user.is_authenticated %}
+            <a href="{% url 'ticket_list' %}">Заявки</a>
+                <a href="{% url 'profile' %}">Профіль</a>
+                <form method="post" action="{% url 'logout' %}" style="display:inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-logout">Вийти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Вхід</a>
+                <a href="{% url 'register' %}">Реєстрація</a>
+            {% endif %}
+        </div>
+    </nav>
+
+     <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message message-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

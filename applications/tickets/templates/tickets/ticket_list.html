@@ -1,0 +1,44 @@
+{% extends 'applications/base.html' %}
+{% block content %}
+<div class="card card-wide">
+    <div class="page-header">
+        <h2>Заявки</h2>
+        {% if user.role == 'client' %}
+            <a href="{% url 'ticket_create' %}" class="btn-primary">Нова заявка</a>
+        {% endif %}
+    </div>
+
+    {% if tickets %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Заголовок</th>
+                <th>Категорія</th>
+                <th>Пріоритет</th>
+                <th>Статус</th>
+                <th>Автор</th>
+                <th>Виконавець</th>
+                <th>Створено</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.id }}</td>
+                <td><a href="{% url 'ticket_detail' ticket.id %}">{{ ticket.title }}</a></td>
+                <td>{{ ticket.category }}</td>
+                <td><span class="badge badge-{{ ticket.priority }}">{{ ticket.get_priority_display }}</span></td>
+                <td><span class="badge badge-{{ ticket.status }}">{{ ticket.get_status_display }}</span></td>
+                <td>{{ ticket.author.username }}</td>
+                <td>{{ ticket.assignee.username|default:"—" }}</td>
+                <td>{{ ticket.created_at|date:"d.m.Y H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="empty">Заявок поки немає</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'applications/base.html' %}
+{% block content %}
+<div class="card card-wide">
+    <div class="page-header">
+        <h2>#{{ ticket.id }} {{ ticket.title }}</h2>
+        <a href="{% url 'ticket_list' %}" class="btn-secondary" style="width:auto;margin-top:0">Назад</a>
+    </div>
+
+    <div class="profile-info">
+        <div class="profile-row">
+            <span class="profile-label">Статус:</span>
+            <span class="badge badge-{{ ticket.status }}">{{ ticket.get_status_display }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Пріоритет:</span>
+            <span class="badge badge-{{ ticket.priority }}">{{ ticket.get_priority_display }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Категорія:</span>
+            <span class="profile-value">{{ ticket.category }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Автор:</span>
+            <span class="profile-value">{{ ticket.author.username }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Виконавець:</span>
+            <span class="profile-value">{{ ticket.assignee.username|default:"Не призначено" }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Створено:</span>
+            <span class="profile-value">{{ ticket.created_at|date:"d.m.Y H:i" }}</span>
+        </div>
+        <div class="profile-row">
+            <span class="profile-label">Оновлено:</span>
+            <span class="profile-value">{{ ticket.updated_at|date:"d.m.Y H:i" }}</span>
+        </div>
+    </div>
+
+    <h3>Опис</h3>
+    <div class="description-box">{{ ticket.description }}</div>
+</div>
+{% if ticket.status != 'closed' and ticket.status != 'rejected' %}
+<div class="actions">
+    <h3>Дії</h3>
+
+    {% if user.role == 'agent' and ticket.status == 'new' %}
+    <form method="post" action="{% url 'ticket_take' ticket.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn-primary">Взяти в роботу</button>
+    </form>
+    {% endif %}
+
+    <form method="post" action="{% url 'ticket_status' ticket.id %}">
+        {% csrf_token %}
+        <select name="status">
+            <option value="in_progress">В роботі</option>
+            <option value="waiting">Очікує відповіді клієнта</option>
+            <option value="resolved">Вирішена</option>
+            <option value="closed">Закрита</option>
+            <option value="rejected">Відхилена</option>
+        </select>
+        <button type="submit" class="btn-primary">Змінити статус</button>
+    </form>
+
+    {% if user.role == 'manager' %}
+    <form method="post" action="{% url 'ticket_priority' ticket.id %}">
+        {% csrf_token %}
+        <select name="priority">
+            {% for value, label in priorities %}
+            <option value="{{ value }}" {% if value == ticket.priority %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn-primary">Змінити пріоритет</button>
+    </form>
+
+    <form method="post" action="{% url 'ticket_assign' ticket.id %}">
+        {% csrf_token %}
+        <select name="agent">
+            {% for agent in agents %}
+            <option value="{{ agent.id }}">{{ agent.username }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn-primary">Призначити</button>
+    </form>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

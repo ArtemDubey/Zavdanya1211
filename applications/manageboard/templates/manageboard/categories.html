@@ -1,0 +1,35 @@
+{% extends 'applications/base.html' %}
+{% block content %}
+<div class="card card-wide">
+    <div class="page-header">
+        <h2>Категорії</h2>
+        <div>
+            <a href="{% url 'manage_category_create' %}" class="btn-primary">Нова категорія</a>
+            <a href="{% url 'manage_dashboard' %}" class="btn-secondary" style="width:auto;margin-top:0">Назад</a>
+        </div>
+    </div>
+    {% if categories %}
+    <table class="table">
+        <thead><tr><th>Назва</th><th>Заявок</th><th></th></tr></thead>
+        <tbody>
+            {% for c in categories %}
+            <tr>
+                <td>{{ c.name }}</td>
+                <td>{{ c.tickets_count }}</td>
+                <td style="display:flex;gap:0.75rem;align-items:center">
+                    <a href="{% url 'manage_category_edit' c.id %}">Редагувати</a>
+                    <form method="post" action="{% url 'manage_category_delete' c.id %}"
+                          onsubmit="return confirm('Видалити категорію?')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-logout">Видалити</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="empty">Категорій поки немає</p>
+    {% endif %}
+</div>
+{% endblock %}

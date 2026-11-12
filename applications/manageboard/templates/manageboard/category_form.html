@@ -1,0 +1,12 @@
+{% extends 'applications/base.html' %}
+{% block content %}
+<div class="card">
+    <h2>{{ title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary">Зберегти</button>
+    </form>
+    <a href="{% url 'manage_categories' %}" class="btn-secondary">Назад</a>
+</div>
+{% endblock %}
